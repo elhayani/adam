@@ -1,0 +1,34 @@
+################################################################################
+version php-7.1.23
+
+################################################################################
+composer create-project symfony/skeleton jobeet2 4.2.0-RC1
+composer require server --dev
+php -S localhost:8000 -t public/
+################################################################################
+
+composer require annotations
+composer require twig
+composer require symfony/apache-pack
+
+################################################################################
+
+
+################################### DOCTRINE #############################################
+composer require symfony/orm-pack
+composer req orm admin api
+php bin/console  doctrine:database:create
+
+composer require doctrine maker
+composer require symfony/maker-bundle --dev
+
+
+ php bin/console config:dump-reference doctrine
+ php bin/console debug:config doctrine
+
+php bin/console doctrine:mapping:import 'App\Entity' annotation --path=src/Entity
+php bin/console make:entity --regenerate App
+
+################################### Formulaire #############################################
+composer require symfony/form
+php bin/console make:form
