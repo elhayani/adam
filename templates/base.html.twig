@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+    {% block menu %}
+        <table>
+            <tr>
+                <td><a href="home">Home</a></td>
+                <td><a href="news">News</a></td>
+                <td><a href="contact">Contact</a></td>
+                <td><a href="number">Number</a></td>
+                <td><a href="about">About</a></td>
+            </tr>
+        </table>    
+    {% endblock menu %}
+{% block body %}{% endblock %}
+{% block javascripts %}{% endblock %}
+</body>
+</html>

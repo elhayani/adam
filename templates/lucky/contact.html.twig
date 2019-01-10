@@ -1,0 +1,12 @@
+{# templates/lucky/number.html.twig #}
+
+{% extends 'base.html.twig' %}
+{% block body %}
+    <ul>
+    {% for stud in students %}
+        <li>{{ stud.Id }}</li>
+        <li>{{ stud.Nom }}</li>
+        <li>{{ stud.Prenom }}</li>
+    {% endfor %}
+</ul>
+    {% endblock %}
