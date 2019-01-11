@@ -143,6 +143,19 @@ class LuckyController extends AbstractController {
         $objRes = json_decode($res);
         $res=$objRes->{'souscripteur'}->{'date_de_naissance'};
         $infos = '';//curl_getinfo($curl);
+        /*
+        if ($res === false) {
+            dump(curl_error($curl));
+        }
+
+        $result = ob_get_contents();
+
+        $isGedFile = substr($result,0,10);
+
+        ob_end_clean();
+        curl_close($curl);
+         *         
+         */
         return $this->render('lucky/ws.html.twig', ['res' => $res, 'infos' => $infos]);
     }
 
