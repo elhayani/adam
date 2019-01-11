@@ -32,3 +32,6 @@ php bin/console make:entity --regenerate App
 ################################### Formulaire #############################################
 composer require symfony/form
 php bin/console make:form
+
+################################### Curl #############################################
+composer require curl/curl

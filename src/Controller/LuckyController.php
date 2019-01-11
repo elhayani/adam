@@ -104,4 +104,46 @@ class LuckyController extends AbstractController {
         return $this->render('lucky/about.html.twig', []);
     }
 
+    /**
+     * @Route("/lucky/ws")
+     */
+    public function ws() {
+        $url = 'http://services-int/TrapServices/api/trap/CreateControl';
+        $authorization = 'Bearer';
+        $methodIsPost = true;
+        $isPutMethode = true;
+        $tokenPost = null;
+        $dataPost = '{"type_mouvement":16,"montant":"50000,00","produit":"6184","canal":"AGEAS","ref_contrat":293960,"souscripteur":{"nom":"ESPIAND","prenom":"BORIS","date_de_naissance":"1972-11-29"}}';
+
+        $headers = array('Authorization: Bearer', 'Cache-Control: no-cache', 'Content-Type: application/json');
+        //$headers = array('Authorization: Bearer', 'Cache-Control: no-cache', 'Content-Type: application/x-xxx-form-urlencoded;charset=UTF-8');
+        ob_start();
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+
+        if (!empty($authorization)) {
+            curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+        }
+        if ($methodIsPost || $isPutMethode) {
+            curl_setopt($curl, CURLOPT_POST, 1);
+            if (!empty($tokenPost)) {
+                curl_setopt($curl, CURLOPT_POSTFIELDS, $tokenPost . '&grant_type=refresh_token');
+            } else {
+                if ($dataPost) {
+                    curl_setopt($curl, CURLOPT_POSTFIELDS, $dataPost);
+                } else {
+                    curl_setopt($curl, CURLOPT_POSTFIELDS, 'grant_type=client_credentials&scope=');
+                }
+            }
+        }
+        curl_setopt($curl, CURLINFO_HEADER_OUT, true);
+        curl_setopt($curl, CURLOPT_VERBOSE, true);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        $res = curl_exec($curl);
+        $objRes = json_decode($res);
+        $res=$objRes->{'souscripteur'}->{'date_de_naissance'};
+        $infos = '';//curl_getinfo($curl);
+        return $this->render('lucky/ws.html.twig', ['res' => $res, 'infos' => $infos]);
+    }
+
 }
